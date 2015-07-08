@@ -1,0 +1,21 @@
+PODS:
+  - React (0.5.0):
+    - React/Core (= 0.5.0)
+  - React/Core (0.5.0)
+  - React/RCTImage (0.5.0):
+    - React/Core
+  - React/RCTNetwork (0.5.0):
+    - React/Core
+  - React/RCTText (0.5.0):
+    - React/Core
+
+DEPENDENCIES:
+  - React
+  - React/RCTImage
+  - React/RCTNetwork
+  - React/RCTText
+
+SPEC CHECKSUMS:
+  React: c9789af172f84013c14ac8ffdc41fb6ce1ba5307
+
+COCOAPODS: 0.37.2
