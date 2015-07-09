@@ -4,7 +4,7 @@
  */
 'use strict';
 
-var React = require('react-native');
+var React = require('../node_modules/react-native');
 var Router = require('../index');
 var Demo = require('./demo');
 
