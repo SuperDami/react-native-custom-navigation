@@ -67,40 +67,30 @@ var NavBarContent = React.createClass({
     return {};
   },
 
-  _initState: function(actionDirection, fadeIn) {
+  _initState: function(direction, fadeIn) {
     var state = {};
     state.opacityStart = fadeIn ? 0 : 1;
     state.opacityEnd = fadeIn ? 1 : 0;
 
-    if (actionDirection === 'left') {
+    if (direction > 0) {
       state.leftStart = fadeIn ? screen.width : 0;
       state.leftEnd = fadeIn ? 0 : -screen.width;
-    } else {
+    } else if (direction < 0) {
       state.leftStart = fadeIn ? -screen.width : 0;
       state.leftEnd = fadeIn ? 0: screen.width;
+    } else {
+      //todo replace
     }
     this.state = state;
   },
 
   componentDidMount: function() {
-    this._initState('left', false);
+    this._initState(1, false);
   },
 
   componentWillReceiveProps: function(newProps) {
-    if (newProps.route !== this.props.route) {
-      if ((newProps.route.index > this.props.route.index) || !this.props.route.index ) {
-        if (this.props.willDisappear) {
-          this._initState('right', false);
-        } else {
-          this._initState('left', true);
-        }
-      } else {
-        if (this.props.willDisappear) {
-          this._initState('left', false);
-        } else {
-          this._initState('right', true);
-        }
-      }
+    if (this.props.route != newProps.route) {
+      this._initState(newProps.direction, !this.props.willDisappear);
     }
   },
 
@@ -132,11 +122,6 @@ var NavBarContent = React.createClass({
 
     var leftCornerContent;
     var BackButton = this.props.backButtonComponent
-
-    console.log('in: ', this.props.route.index);
-    if (BackButton) {
-      console.log('has back');
-    }
 
     if (this.props.route.index > 0 && BackButton) {
       leftCornerContent = (

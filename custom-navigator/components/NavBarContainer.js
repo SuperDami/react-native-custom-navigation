@@ -57,7 +57,6 @@ var NavBarContainer = React.createClass({
       previousRoute: fromRoute,
       currentRoute: toRoute,
     };
-
   },
 
   onAnimationEnd: function() {
@@ -70,40 +69,68 @@ var NavBarContainer = React.createClass({
 
   // We render both the current and the previous navbar (for animation)
   render: function() {
-    var preBackground = this.state.previousRoute ? (
+
+    var currentProps = {
+      progress:this.state.progress,
+      route:this.state.currentRoute,
+    };
+
+    var previousProps = {
+      progress:this.state.progress,
+      route:this.state.previousRoute,
+      willDisappear:true
+    };
+
+    var previousContent, currentContent;
+    var previousBackground, currentBackground;
+    if (this.state.previousRoute) {
+      previousBackground = (
         <NavbarBackground
-          progress={this.state.progress}
-          style={styles.background}
-          route={this.state.previousRoute}
-          willDisappear="true"/>) : null;
+          {...previousProps}
+          style={styles.background}/>);
 
-    var currentBackground = this.state.currentRoute ? (
+      currentBackground = (
         <NavbarBackground
-          progress={this.state.progress}
-          style={styles.background}
-          route={this.state.currentRoute}/>) : null;
+          {...currentProps}
+          style={styles.background}/>);
 
-    var preNavbarContent = this.state.previousRoute ? (
+      currentContent = (
         <NavBarContent
-          progress={this.state.progress}
-          route={this.state.previousRoute}
-          backButtonComponent={this.props.backButtonComponent}
-          willDisappear="true" />) : null;
-
-    var currentNavbarContent = this.state.currentRoute ? (
-        <NavBarContent
-          progress={this.state.progress}
-          route={this.state.currentRoute}
+          {...currentProps}
+          direction={this.state.currentRoute.index - this.state.previousRoute.index}
           backButtonComponent={this.props.backButtonComponent}
           goBack={this.goBack}
-          goForward={this.goForward}/>) : null;
+          goForward={this.goForward}/>);
+
+      previousContent = (
+        <NavBarContent
+          {...previousProps}
+          direction={this.state.currentRoute.index - this.state.previousRoute.index}
+          backButtonComponent={this.props.backButtonComponent}
+          goBack={this.goBack}
+          goForward={this.goForward}/>);
+
+    } else if (this.state.currentRoute){
+      currentBackground = (
+        <NavbarBackground
+          {...currentProps}
+          style={styles.background}/>);
+
+      currentContent = (
+        <NavBarContent
+          {...currentProps}
+          direction={0}
+          backButtonComponent={this.props.backButtonComponent}
+          goBack={this.goBack}
+          goForward={this.goForward}/>);
+    }
 
     return (
       <View style={[styles.navbarContainer, this.props.style]}>
-        {preBackground}
+        {previousBackground}
         {currentBackground}
-        {preNavbarContent}
-        {currentNavbarContent}
+        {previousContent}
+        {currentContent}
       </View>
     )
   }

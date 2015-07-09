@@ -30,7 +30,6 @@ var Router = React.createClass({
    * > but a recent update to React Native seems to break the animation
    */
   onDidFocus: function(route) {
-    console.log('focus: ', route.index);
     this.setState({ route: route });
   },
 
@@ -41,7 +40,6 @@ var Router = React.createClass({
   },
 
   onForward: function(route, navigator) {
-    console.log('forward: ', route.index);
     route.index = this.state.route.index + 1 || 1;
     navigator.push(route);
   },
@@ -129,7 +127,7 @@ var Router = React.createClass({
 
     var navigationBar =
       <NavBarContainer
-        style={[this.props.headerStyle, this.state.headerStyle]}
+        style={this.props.headerStyle}
         currentRoute={this.state.route}
         backButtonComponent={this.props.backButtonComponent}
         toRoute={this.onForward}
