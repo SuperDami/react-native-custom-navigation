@@ -12,7 +12,7 @@ var screen = require('Dimensions').get('window');
 var NavbarContent = React.createClass({
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, this.props.style]}>
         <Text style={styles.titleText}>{this.props.title}</Text>
       </View>
     )

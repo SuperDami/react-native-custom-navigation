@@ -20,7 +20,6 @@ var Router = React.createClass({
       route: null,
       dragStartX: null,
       didSwitchView: null,
-      headerStyle: null,
     };
   },
 
@@ -127,7 +126,6 @@ var Router = React.createClass({
 
     var navigationBar =
       <NavBarContainer
-        style={this.props.headerStyle}
         currentRoute={this.state.route}
         backButtonComponent={this.props.backButtonComponent}
         toRoute={this.onForward}
