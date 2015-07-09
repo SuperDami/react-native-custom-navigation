@@ -1,10 +1,26 @@
 {
-  "name": "AwesomeProject",
+  "name": "react-native-custom-navigation",
   "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node_modules/react-native/packager/packager.sh"
+  "description": "A navigation that allow to custom the appearance of navigation bar in your app",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/superdami/react-native-custom-navigation.git"
   },
+  "keywords": [
+    "react",
+    "react-component",
+    "react-native",
+    "ios",
+    "navigation",
+    "navigation-bar",
+    "navbar",
+    "router",
+    "navigation-bar-animation"
+  ],
+  "author": "Chen Zhejun <eatdami@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/superdami/react-native-custom-navigation",
   "dependencies": {
     "react-native": "^0.5.0"
   }

@@ -5,8 +5,8 @@
 'use strict';
 
 var React = require('react-native');
-var Navigator = require('./custom-navigator/Router');
-var Demo = require('./reactComponents/demo');
+var Router = require('../index');
+var Demo = require('./demo');
 
 var {
   Text,
@@ -29,7 +29,7 @@ var BackButton = React.createClass({
 var RootController = React.createClass({
   render() {
     return (
-      <Navigator
+      <Router
         backButtonComponent={BackButton}
         initialRoute={{
           component: Demo,
