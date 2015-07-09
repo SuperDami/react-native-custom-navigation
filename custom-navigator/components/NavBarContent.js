@@ -2,13 +2,11 @@
 
 var React = require('react-native');
 
-var NavButton = require('./NavButton');
-
-var time = 200;
 var {
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableHighlight
 } = React;
 
 var NavbarBackground = React.createClass({
@@ -125,17 +123,28 @@ var NavBarContent = React.createClass({
     var opacity = (this.state.opacityEnd - this.state.opacityStart) * this.props.progress + this.state.opacityStart;
 
     var transitionStyle = {
+      position: 'absolute',
       opacity: opacity,
       left: left
     };
 
     var leftCorner;
-    var rightCorner;
-    var titleComponent;
 
     var leftCornerContent;
-    if (this.props.route.index > 0) {
-      leftCornerContent = <NavButton onPress={this.goBack} backButtonComponent={this.props.backButtonComponent} />;
+    var BackButton = this.props.backButtonComponent
+
+    console.log('in: ', this.props.route.index);
+    if (BackButton) {
+      console.log('has back');
+    }
+
+    if (this.props.route.index > 0 && BackButton) {
+      leftCornerContent = (
+        <TouchableHighlight onPress={this.goBack} underlayColor="transparent">
+          <View style={styles.backView}>
+            <BackButton />
+          </View>
+        </TouchableHighlight>);
     }
 
     leftCorner = (
@@ -147,13 +156,17 @@ var NavBarContent = React.createClass({
     var mainContent;
     if (this.props.route.navbarComponent) {
       mainContent = this.props.route.navbarComponent;
+    } else if (this.props.route.title) {
+      mainContent = (
+        <Text
+          style={[styles.title, this.props.route.titleStyle]}
+          numberOfLines={1}>{this.props.route.title}</Text>
+        )
     }
 
     return (
-      <View style={[styles.navbar, this.props.route.headerStyle, transitionStyle]}>
-        <View>
-          {mainContent}
-        </View>
+      <View style={[styles.navbar, transitionStyle]}>
+        {mainContent}
         {leftCorner}
       </View>
     );
@@ -166,11 +179,11 @@ var styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    height: 64, // Default iOS navbar height
+    height: 64,
     justifyContent: 'center',
-    alignItems: 'center',
     flexDirection: 'row',
   },
+
   corner: {
     flex: 1,
     left:0,
@@ -178,9 +191,26 @@ var styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'center',
   },
+
   alignLeft: {
     alignItems: 'flex-start'
   },
+
+  title: {
+    position: 'absolute',
+    width: screen.width - 100,
+    top: 28,
+    left: 50,
+    fontSize: 18,
+    color: '#fff',
+    textAlign: 'center',
+  },
+
+  backView: {
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+  }
 });
 
 

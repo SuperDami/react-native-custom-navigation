@@ -10,13 +10,10 @@ var {
   View
 } = React;
 
-
 var NavBarContainer = React.createClass({
 
   getInitialState: function() {
-    return {
-      backButtonOpacity: 0,
-    };
+    return {};
   },
 
   componentWillReceiveProps: function(newProps) {
@@ -32,7 +29,6 @@ var NavBarContainer = React.createClass({
       previousRoute: this.props.currentRoute,
       currentRoute: newProps.currentRoute
     });
-
   },
 
   goBack: function() {
@@ -45,14 +41,6 @@ var NavBarContainer = React.createClass({
 
   customAction: function(opts) {
     this.props.customAction(opts);
-  },
-
-  handleWillFocus: function(route) {
-    // console.log('handle focus: ', route);
-    // console.log(this.props.navigator);
-    // console.log(this.props.navigator.routeStack);
-    // console.log(this.props.navState);
-    // console.log(this.props.navState.routeStack);
   },
 
   _onAnimationChange: function(progress, fromIndex, toIndex) {
