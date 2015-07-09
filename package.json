@@ -9,16 +9,15 @@
   },
   "keywords": [
     "react",
-    "react-component",
-    "react-native",
+    "react component",
+    "react native",
+    "react navigation",
     "ios",
     "navigation",
-    "navigation-bar",
     "navbar",
-    "router",
-    "navigation-bar-animation"
+    "router"
   ],
-  "author": "Chen Zhejun <eatdami@gmail.com>",
+  "author": "Chen Zhejun <devsuperdami@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/superdami/react-native-custom-navigation",
   "dependencies": {
