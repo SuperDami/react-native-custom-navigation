@@ -126,6 +126,7 @@ var Router = React.createClass({
 
     var navigationBar =
       <NavBarContainer
+        navbarComponent={this.props.navbarComponent}
         currentRoute={this.state.route}
         backButtonComponent={this.props.backButtonComponent}
         toRoute={this.onForward}

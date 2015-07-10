@@ -125,10 +125,23 @@ var NavBarContainer = React.createClass({
           goForward={this.goForward}/>);
     }
 
+    var fromIndex = this.state.previousRoute ? this.state.previousRoute.index : null;
+    var toIndex = this.state.currentRoute ? this.state.currentRoute.index : null;
+
+    var navbar = this.props.navbarComponent ? (
+      <View style={styles.navbar}>
+        <this.props.navbarComponent
+          progress={this.state.progress}
+          fromIndex={fromIndex}
+          toIndex={toIndex}/>
+      </View>
+      ) : null;
+
     return (
       <View style={[styles.navbarContainer, this.props.style]}>
         {previousBackground}
         {currentBackground}
+        {navbar}
         {previousContent}
         {currentContent}
       </View>
@@ -138,6 +151,15 @@ var NavBarContainer = React.createClass({
 
 
 var styles = StyleSheet.create({
+  navbar: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: 64,
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+
   background: {
     position: 'absolute',
     top: 0,
@@ -145,6 +167,7 @@ var styles = StyleSheet.create({
     right: 0,
     height: 64,
   },
+
   navbarContainer: {
     position: 'absolute',
     top: 0,
