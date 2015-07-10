@@ -34,6 +34,10 @@ var RootController = React.createClass({
         initialRoute={{
           component: Demo,
           title: 'Root',
+          titleStyle: {
+            color: '#ddd',
+            fontSize: 22
+          }
         }}/>);
   }
 });

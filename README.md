@@ -6,6 +6,22 @@ Inspired by [react-native-router](https://github.com/t4t5/react-native-router)
 
 ![Example](https://www.dropbox.com/s/3jqguw37buhagu4/demo.gif?dl=1)
 
+Install
+-------
+
+In your React Native project directory and run:
+
+```npm install react-native-custom-navigation --save```
+
+Usage
+-------
+
+
+Configurations
+--------------
+
+
 Todos
------
-less and clear code
+-------
+Less and clear code
+Provide interface to control your navigation-bar animation for view is transition.

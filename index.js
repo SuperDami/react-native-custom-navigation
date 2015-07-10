@@ -94,7 +94,7 @@ var Router = React.createClass({
 
     return (
       <View
-        style={[styles.container, this.props.bgStyle]}
+        style={[styles.container]}
         onStartShouldSetResponder={didStartDrag}
         onResponderMove={didMoveFinger}
         onResponderTerminationRequest={preventDefault}>
@@ -148,7 +148,6 @@ var Router = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
   },
 });
 

@@ -82,7 +82,11 @@ var DemoView = React.createClass({
 
     this.props.route.push({
       component: DemoView,
-      title: nextIndex
+      title: nextIndex,
+      titleStyle: {
+        fontSize: 22,
+        color: '#eee'
+      }
     });
   },
 
