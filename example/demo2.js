@@ -1,13 +1,14 @@
 var React = require('react-native');
 var {
-	Image,
-	View,
+  Image,
+  View,
   ScrollView,
-	StyleSheet,
+  StyleSheet,
   Text,
   TouchableHighlight
 } = React;
 
+var Router = require('react-native-custom-navigation');
 var imageArray = [
   'https://divnil.com/wallpaper/iphone5/img/app/c/l/clear-your-desktop-wallpaper-for-640x1136-iphone-5-311-46_33a8356f2205d7c0be8727720a21a207_raw.jpg',
   'http://live-wallpaper.net/iphone5s/img/app/i/p/iphone5_ios7_01869_40f81d87eba8242eb9d1d777aa0f620a_raw.jpg',
@@ -26,31 +27,67 @@ var navbarColors = [
 
 var NavbarContent = require('./navbar');
 var screen = require('Dimensions').get('window');
+
+var Navbar = React.createClass({
+  getInitialState() {
+    return {
+      progress: 0
+    };
+  },
+
+  componentWillReceiveProps(newProps) {
+    var progress;
+    var n = Math.abs(newProps.fromIndex - newProps.toIndex) * newProps.progress;
+    if (newProps.toIndex > newProps.fromIndex) {
+      progress = (newProps.fromIndex + n) * 0.2 ;
+    } else {
+      progress = (newProps.fromIndex - n) * 0.2 ;
+    }
+
+    this.setState({
+      progress : progress
+    });
+  },
+
+  render() {
+    var width = this.state.progress * 300;
+    return (
+      <View
+        style={styles.navbar}>
+        <View style={styles.axisView}>
+          <View style={[styles.progress, {width: width}]}/>
+        </View>
+      </View>
+      );
+  }
+});
+
+var RootController = React.createClass({
+  render() {
+    return (
+      <Router
+        navbarComponent={Navbar}
+        initialRoute={{
+          component: DemoView,
+        }}/>);
+  }
+});
+
 var DemoView = React.createClass({
-	render() {
+  render() {
     var imageIndex = this.props.route.index % imageArray.length;
     var imageUri = imageArray[imageIndex];
 
-		return (
+    return (
       <View style={styles.container}>
-        <ScrollView
-          scrollEventThrottle={16}
-          onScroll={this._handleScroll}>
           <Image
             style={styles.image}
             source={{uri: imageUri}}>
             <TouchableHighlight
-              style={[styles.button, {marginTop: 120}]}
+              style={styles.button}
               onPress={this._pushToNext}>
               <View style={styles.buttonView}>
                 <Text style={styles.buttonText}>Push</Text>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight
-              style={styles.button}
-              onPress={this._pushToNextCustomNavbar}>
-              <View style={styles.buttonView}>
-                <Text style={styles.buttonText}>Push with custom navbar</Text>
               </View>
             </TouchableHighlight>
             <TouchableHighlight
@@ -68,55 +105,27 @@ var DemoView = React.createClass({
               </View>
             </TouchableHighlight>
           </Image>
-        </ScrollView>
       </View>
-		)
-	},
+    )
+  },
 
   _back() {
     this.props.route.pop();
   },
 
   _pushToNext() {
-    var nextIndex = ++this.props.route.index;
+    if (this.props.route.index > 4) {
+      return;
+    }
 
     this.props.route.push({
       component: DemoView,
-      title: nextIndex,
-      titleStyle: {
-        fontSize: 22,
-        color: '#eee'
-      }
-    });
-  },
-
-  _pushToNextCustomNavbar() {
-    var colorIndex = this.props.route.index % imageArray.length;
-    var color = navbarColors[colorIndex];
-    var nextIndex = this.props.route.index + 1;
-    var navbarContent = (
-          <NavbarContent
-            style={{backgroundColor: color}}/>);
-
-    this.props.route.push({
-      component: DemoView,
-      title: 'title would never show',
-      navbarComponent: navbarContent
     });
   },
 
   _popToTop() {
     this.props.route.popToTop();
   },
-
-  _handleScroll(e) {
-    var alpha = (e.nativeEvent.contentInset.top + e.nativeEvent.contentOffset.y) / 200;
-    if (alpha < 0) alpha = 0;
-    if (alpha > 1) alpha = 1;
-
-    var style = {backgroundColor: 'rgba(102, 106, 136, ' + alpha +')'};
-    this.props.route.updateNavbarStyle(style);
-  }
 });
 
 var styles = StyleSheet.create({
@@ -145,11 +154,36 @@ var styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0)'
   },
 
-	image: {
+  image: {
     alignItems: 'center',
-		width: screen.width,
-		height: screen.height * 1.5,
-	},
+    width: screen.width,
+    height: screen.height,
+    justifyContent: 'center'
+  },
+
+  navbar: {
+    width:screen.width,
+    height: 64,
+    backgroundColor: '#5e5f67',
+    justifyContent: 'center'
+  },
+
+  axisView: {
+    marginTop: 20,
+    width: 300,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor : '#fff',
+    alignSelf: 'center',
+    justifyContent: 'center'
+  },
+
+  progress: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#b7d967',
+    height: 6,
+    borderRadius: 3,
+  }
 });
 
-module.exports = DemoView;
+module.exports = RootController;

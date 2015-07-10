@@ -5,41 +5,11 @@
 'use strict';
 
 var React = require('react-native');
-var Router = require('react-native-custom-navigation');
-var Demo = require('./demo');
+var Demo1 = require('./demo1');
+var Demo2 = require('./demo2');
 
 var {
-  Text,
   AppRegistry,
-  View
 } = React;
 
-var BackButton = React.createClass({
-  render() {
-    return (
-        <Text style={{
-            alignSelf: 'center',
-            textAlign: 'center',
-            fontSize: 16,
-            color: '#fff',
-          }}>Back</Text>)
-  }
-});
-
-var RootController = React.createClass({
-  render() {
-    return (
-      <Router
-        backButtonComponent={BackButton}
-        initialRoute={{
-          component: Demo,
-          title: 'Root',
-          titleStyle: {
-            color: '#ddd',
-            fontSize: 22
-          }
-        }}/>);
-  }
-});
-
-AppRegistry.registerComponent('ReactTest', () => RootController);
+AppRegistry.registerComponent('ReactTest', () => Demo2);
