@@ -4,7 +4,18 @@ The goal is making a easy navigation router for react-native, you could plug-in 
 
 Inspired by [react-native-router](https://github.com/t4t5/react-native-router)
 
-![Example](https://www.dropbox.com/s/3jqguw37buhagu4/demo.gif?dl=1)
+Case 1:  
+Dirrerent view stack using different navgation bar  
+
+![Example](https://www.dropbox.com/s/3jqguw37buhagu4/demo.gif?dl=1)  
+
+
+Case 2:
+Using singleton navigation bar for all views
+
+![Example](https://www.dropbox.com/s/ik6i3x6m2bgirh5/demo2.gif?dl=1)
+
+
 
 Install
 -------
@@ -12,6 +23,32 @@ Install
 In your React Native project directory and run:
 
 ```npm install react-native-custom-navigation --save```
+
+
+
+DEMO
+-------
+
+In node_modules/react-native-custom-navigation/example directory and run:
+
+```npm install```
+
+In ```index.ios.js```, there are two demo for you choice
+
+
+```javascript
+var React = require('react-native');
+var Demo1 = require('./demo1');
+var Demo2 = require('./demo2');
+
+var {
+  AppRegistry,
+} = React;
+
+//AppRegistry.registerComponent('ReactTest', () => Demo1);
+AppRegistry.registerComponent('ReactTest', () => Demo2);
+```
+
 
 Usage
 -------
@@ -116,15 +153,17 @@ Configurations
 The **`<Router \>`** object used to initialize the navigation can take the following props:
 - `initialRoute` (required)
 - `backButtonComponent`
+- `navbarComponent`: Set the component as the singleton navbar for all views. 
 
 The **`this.props.route.push()`** callback prop takes one parameter (a JavaScript object) which can have the following keys:
 - `title`:
 - `titleStyle`
 - `component` (required)
-- `navbarComponent`
+- `navbarComponent`: Set the component as the navbar in this route  
 - `passProps`: Send object data to your route. access the data by `this.props.xxx`
 
 The **`this.props.route.updateNavbarStyle()`** callback prop takes style object which update the style of navbar background
+
 
 Todos
 -------
