@@ -26,12 +26,12 @@ The basics:
 var BackButton = React.createClass({
   render() {
     return (
-        <Text style={{
-            alignSelf: 'center',
-            textAlign: 'center',
-            fontSize: 16,
-            color: '#fff',
-          }}>Back</Text>)
+      <Text style={{
+          alignSelf: 'center',
+          textAlign: 'center',
+          fontSize: 16,
+          color: '#fff',
+        }}>Back</Text>)
   }
 });
 
@@ -79,21 +79,17 @@ We got a scrollView in FirstView, we can have fade-in navbar-background when we 
 ```javascript
 var FirstView = React.createClass({
 	render() {
-    var imageIndex = this.props.route.index % imageArray.length;
-    var imageUri = imageArray[imageIndex];
-
 		return (
-        <ScrollView
-          scrollEventThrottle={16}
-          onScroll={this._handleScroll}>
-          <TouchableHighlight
-            onPress={this._push}>
-            <View style={styles.buttonView}>
-              <Text style={styles.buttonText}>Push with custom navbar</Text>
-            </View>
-          </TouchableHighlight>
-        </ScrollView>
-      </View>
+      <ScrollView
+        scrollEventThrottle={16}
+        onScroll={this._handleScroll}>
+        <TouchableHighlight
+          onPress={this._push}>
+          <View style={styles.buttonView}>
+            <Text style={styles.buttonText}>Push with custom navbar</Text>
+          </View>
+        </TouchableHighlight>
+      </ScrollView>
 		)
 	},
 
@@ -105,15 +101,7 @@ var FirstView = React.createClass({
     var style = {backgroundColor: 'rgba(102, 106, 136, ' + alpha +')'};
     this.props.route.updateNavbarStyle(style);
   }
-});
-```
 
-You can then navigate further to a new component by calling
-```this.props.route.push()```.
-You can set "navbarComponent" with your navigation-bar component.
-If you want keep the fade-in effect in next view stack, make sure the background color of your navigation-bar is transparent.
-
-```javascript
   _push() {
     var navbarContent = (
           <CustomNavbar
@@ -125,7 +113,14 @@ If you want keep the fade-in effect in next view stack, make sure the background
       navbarComponent: navbarContent
     });
   },
+});
 ```
+
+You can then navigate further to a new component by calling
+```this.props.route.push()```.
+You can set "navbarComponent" with your navigation-bar component.
+If you want keep the fade-in effect in next view stack, make sure the background color of your navigation-bar is transparent.
+
 
 Configurations
 --------------
