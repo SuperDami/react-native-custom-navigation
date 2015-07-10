@@ -5,7 +5,7 @@ The goal is making a easy navigation router for react-native, you could plug-in 
 Inspired by [react-native-router](https://github.com/t4t5/react-native-router)
 
 Case 1:  
-Dirrerent view stack using different navgation bar  
+Different view stack using different navgation bar  
 
 ![Example](https://www.dropbox.com/s/3jqguw37buhagu4/demo.gif?dl=1)  
 
@@ -26,14 +26,14 @@ In your React Native project directory and run:
 
 
 
-DEMO
+Demo
 -------
 
 In node_modules/react-native-custom-navigation/example directory and run:
 
 ```npm install```
 
-In ```index.ios.js```, there are two demo for you choice
+In ```index.ios.js```, 2 demos are ready for you.
 
 
 ```javascript
@@ -45,8 +45,7 @@ var {
   AppRegistry,
 } = React;
 
-//AppRegistry.registerComponent('ReactTest', () => Demo1);
-AppRegistry.registerComponent('ReactTest', () => Demo2);
+AppRegistry.registerComponent('ReactTest', () => Demo1);
 ```
 
 
@@ -150,7 +149,7 @@ If you want still have the fade-in effect, make sure the background color of you
 
 Configurations
 --------------
-The **`<Router \>`** object used to initialize the navigation can take the following props:
+The **`<Router />`** object used to initialize the navigation can take the following props:
 - `initialRoute` (required)
 - `backButtonComponent`
 - `navbarComponent`: Set the component as the singleton navbar for all views. 
@@ -169,4 +168,8 @@ Todos
 -------
 
 - Less and clear code
-- Provide interface to control your navigation-bar animation for view is transition.
+
+
+Questions?
+---------
+feel free to [follow me on Twitter](https://twitter.com/eatdami)
