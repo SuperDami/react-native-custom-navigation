@@ -20,10 +20,7 @@ Usage
 var Router = require('react-native-custom-navigation');
 ```
 
-The basics:
-
 Your route object should contain component object for the page to render.
-
 I would like setting a backButton component for each view stack, also you can pass this and manage the back-
 button by your navigation-bar.
 
@@ -64,7 +61,6 @@ AppRegistry.registerComponent('ReactTest', () => RootController);
 ```
 
 Here we go.
-
 We got a scrollView in FirstView, we can have fade-in navbar-background when we scrolling down.
 
 ```javascript
@@ -108,10 +104,11 @@ var FirstView = React.createClass({
 ```
 
 You can then navigate further to a new component by calling
-```this.props.route.push()```.
+```javascript
+this.props.route.push()
+```
 
 You can set "navbarComponent" with your navigation-bar component.
-
 If you want keep the fade-in effect in next view stack, make sure the background color of your navigation-bar is transparent.
 
 
