@@ -100,6 +100,7 @@ var DemoView = React.createClass({
 
     this.props.route.push({
       component: DemoView,
+      title: 'title would never show',
       navbarComponent: navbarContent
     });
   },
@@ -114,7 +115,7 @@ var DemoView = React.createClass({
     if (alpha > 1) alpha = 1;
 
     var style = {backgroundColor: 'rgba(102, 106, 136, ' + alpha +')'};
-    this.props.route.updateNavbarStyle && this.props.route.updateNavbarStyle(style);
+    this.props.route.updateNavbarStyle(style);
   }
 });
 
