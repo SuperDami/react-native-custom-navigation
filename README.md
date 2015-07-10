@@ -1,6 +1,6 @@
 react-native-custom-navigation
 ===================
-The goal is making a easy navigation router for react-native, you could plug-in different navigation-bar in each view stack, and update navigation-bar background style at any time. The router would provide your navigation-bar a smooth transition animation when push, pop or swipe-back gesture.
+The goal is making a easy navigation router for react-native, you could plug-in different navigation-bar in each view stack, and update navigation-bar background style at any time. The router would provide your navigation-bar a smooth transition animation when push, pop or swipe-back gesture is activating.
 
 Inspired by [react-native-router](https://github.com/t4t5/react-native-router)
 
@@ -21,8 +21,7 @@ var Router = require('react-native-custom-navigation');
 ```
 
 Your route object should contain component object for the page to render.  
-I would like setting a backButton component for each view stack, also you can pass this and manage the back-
-button by your navigation-bar.
+I would like setting a back-button component for each view stack, also you can pass this and manage the back-button by your navigation-bar.
 
 ```javascript
 
@@ -61,7 +60,7 @@ AppRegistry.registerComponent('ReactTest', () => RootController);
 ```
 
 Here we go.  
-We got a scrollView in FirstView, we can have fade-in navbar-background when we scrolling down.
+Now we got a scrollView here, we can have fade-in navbar-background when we scrolling down.
 
 ```javascript
 var FirstView = React.createClass({
@@ -108,13 +107,24 @@ You can then navigate further to a new component by calling
 this.props.route.push()
 ```
 
-You can set "navbarComponent" with your navigation-bar component.  
-If you want keep the fade-in effect in next view stack, make sure the background color of your navigation-bar is transparent.  
+You can set "navbarComponent" as navigation-bar in next route object.  
+If you want still have the fade-in effect, make sure the background color of your "navbarComponent" is transparent.  
 
 
 Configurations
 --------------
+The **`<Router \>`** object used to initialize the navigation can take the following props:
+- `initialRoute` (required)
+- `backButtonComponent`
 
+The **`this.props.route.push()`** callback prop takes one parameter (a JavaScript object) which can have the following keys:
+- `title`:
+- `titleStyle`
+- `component` (required)
+- `navbarComponent`
+- `passProps`: Send object data to your route. access the data by `this.props.xxx`
+
+The **`this.props.route.updateNavbarStyle()`** callback prop takes style object which update the style of navbar background
 
 Todos
 -------
