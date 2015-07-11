@@ -155,11 +155,20 @@ The **`<Router />`** object used to initialize the navigation can take the follo
 - `navbarComponent`: Set the component as the singleton navbar for all views. 
 
 The **`this.props.route.push()`** callback prop takes one parameter (a JavaScript object) which can have the following keys:
-- `title`:
+- `title`
 - `titleStyle`
 - `component` (required)
 - `navbarComponent`: Set the component as the navbar in this route  
 - `passProps`: Send object data to your route. access the data by `this.props.xxx`
+
+The **`navbarComponent` and `component`** access route parameter or function by ***`this.props.route`*** which have the following keys:
+- `index`
+- `previousIndex`(for singleton navbar only)
+- `progress`(for singleton navbar only): current transition animation progress (0 - 1)
+- `updateNavbarStyle`(view component only)
+- `push`
+- `pop`
+- `popToTop`
 
 The **`this.props.route.updateNavbarStyle()`** callback prop takes style object which update the style of navbar background
 

@@ -1,6 +1,6 @@
 {
   "name": "react-native-custom-navigation",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A navigation that allow to custom the appearance of navigation bar in your app",
   "main": "index.js",
   "repository": {
