@@ -43,8 +43,8 @@ var Router = React.createClass({
     navigator.push(route);
   },
 
-  customAction: function(opts) {
-    this.props.customAction(opts);
+  onFirst: function(navigator) {
+    navigator.popToTop();
   },
 
   renderScene: function(route, navigator) {
@@ -60,10 +60,6 @@ var Router = React.createClass({
     var goToFirstRoute = function() {
       navigator.popToTop();
     };
-
-    var customAction = function(opts) {
-      this.customAction(opts);
-    }.bind(this);
 
     var didStartDrag = function(evt) {
       var x = evt.nativeEvent.pageX;
@@ -129,8 +125,9 @@ var Router = React.createClass({
         navbarComponent={this.props.navbarComponent}
         currentRoute={this.state.route}
         backButtonComponent={this.props.backButtonComponent}
-        toRoute={this.onForward}
-        toBack={this.onBack}/>
+        onForward={this.onForward}
+        onBack={this.onBack}
+        onFirst={this.onFirst}/>
 
     var initialRoute = this.props.initialRoute;
     initialRoute.index = 0;

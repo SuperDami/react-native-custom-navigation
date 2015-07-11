@@ -27,8 +27,9 @@ var navbarColors = [
 
 var NavbarContent = require('./navbar');
 var screen = require('Dimensions').get('window');
+var axisWidth = 280;
 
-var Navbar = React.createClass({
+var NavbarWrapper = React.createClass({
   getInitialState() {
     return {
       progress: 0
@@ -36,26 +37,45 @@ var Navbar = React.createClass({
   },
 
   componentWillReceiveProps(newProps) {
-    var progress;
-    var n = Math.abs(newProps.fromIndex - newProps.toIndex) * newProps.progress;
-    if (newProps.toIndex > newProps.fromIndex) {
-      progress = (newProps.fromIndex + n) * 0.2 ;
-    } else {
-      progress = (newProps.fromIndex - n) * 0.2 ;
+
+    if (newProps.route != this.props.route) {
+      var route = newProps.route;
+      var progress;
+      var n = Math.abs(route.previousIndex - route.index) * route.progress;
+      if (route.index > route.previousIndex) {
+        progress = (route.previousIndex + n) * 0.2;
+      } else {
+        progress = (route.previousIndex - n) * 0.2;
+      }
+
+      this.setState({
+        progress : progress
+      });
+    }
+  },
+
+  _push() {
+    if (this.props.route.index > 4) {
+      return;
     }
 
-    this.setState({
-      progress : progress
+    this.props.route.push({
+      component: DemoView,
     });
   },
 
   render() {
-    var width = this.state.progress * 300;
+    var width = this.state.progress * axisWidth;
     return (
-      <View
-        style={styles.navbar}>
-        <View style={styles.axisView}>
-          <View style={[styles.progress, {width: width}]}/>
+      <View>
+        <NavbarContent
+          goFoward = {this._push}
+          goBack = {this.props.route.pop}
+          style={{backgroundColor: '#5e5f67'}} />
+        <View style={styles.activity}>
+          <View style={styles.axisView}>
+            <View style={[styles.progress, {width: width}]}/>
+          </View>
         </View>
       </View>
       );
@@ -66,7 +86,7 @@ var RootController = React.createClass({
   render() {
     return (
       <Router
-        navbarComponent={Navbar}
+        navbarComponent={NavbarWrapper}
         initialRoute={{
           component: DemoView,
         }}/>);
@@ -161,6 +181,14 @@ var styles = StyleSheet.create({
     justifyContent: 'center'
   },
 
+  activity: {
+    position: 'absolute',
+    height: 64,
+    width: axisWidth,
+    top: 0,
+    left: (screen.width - axisWidth) / 2
+  },
+
   navbar: {
     width:screen.width,
     height: 64,
@@ -169,8 +197,8 @@ var styles = StyleSheet.create({
   },
 
   axisView: {
-    marginTop: 20,
-    width: 300,
+    marginTop: 40,
+    width: axisWidth,
     height: 8,
     borderRadius: 4,
     backgroundColor : '#fff',

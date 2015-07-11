@@ -54,8 +54,7 @@ var NavbarBackground = React.createClass({
     var currentStyle = this.state.currentStyle;
     var savedStyle = this.props.route.style;
     return (
-      <View style={[this.props.style, currentStyle, savedStyle, transitionStyle]}>
-      </View>
+      <View style={[this.props.style, currentStyle, savedStyle, transitionStyle]} />
     );
   }
 });
@@ -94,20 +93,6 @@ var NavBarContent = React.createClass({
     }
   },
 
-  goBack: function() {
-    if (!this.props.willDisappear) {
-      this.props.goBack();
-    }
-  },
-
-  goForward: function(route) {
-    this.props.goForward(route);
-  },
-
-  customAction: function(opts) {
-    this.props.customAction(opts);
-  },
-
   render() {
     var left = (this.state.leftEnd - this.state.leftStart) * this.props.progress + this.state.leftStart;
     var opacity = (this.state.opacityEnd - this.state.opacityStart) * this.props.progress + this.state.opacityStart;
@@ -118,41 +103,54 @@ var NavBarContent = React.createClass({
       left: left
     };
 
-    var leftCorner;
-
-    var leftCornerContent;
-    var BackButton = this.props.backButtonComponent
-
-    if (this.props.route.index > 0 && BackButton) {
-      leftCornerContent = (
-        <TouchableHighlight onPress={this.goBack} underlayColor="transparent">
-          <View style={styles.backView}>
-            <BackButton />
-          </View>
-        </TouchableHighlight>);
-    }
-
-    leftCorner = (
-      <View style={[styles.corner, styles.alignLeft]}>
-        {leftCornerContent}
-      </View>
-    );
-
     var mainContent;
     if (this.props.route.navbarComponent) {
-      mainContent = this.props.route.navbarComponent;
-    } else if (this.props.route.title) {
+      var NavbarComponent = this.props.route.navbarComponent;
       mainContent = (
-        <Text
-          style={[styles.title, this.props.route.titleStyle]}
-          numberOfLines={1}>{this.props.route.title}</Text>
-        )
+        <NavbarComponent
+          route={{
+            index: this.props.route.index,
+            push: this.props.goForward,
+            pop: this.props.goBack,
+            popToTop: this.props.goFirst
+          }}/>
+        );
+    } else {
+      var leftCorner;
+      var leftCornerContent;
+      var BackButton = this.props.backButtonComponent
+
+      if (this.props.route.index > 0 && BackButton) {
+        leftCornerContent = (
+          <TouchableHighlight onPress={this.props.goBack} underlayColor="transparent">
+            <View style={styles.backView}>
+              <BackButton />
+            </View>
+          </TouchableHighlight>);
+      }
+
+      leftCorner = (
+        <View
+          key='nav-back'
+          style={[styles.corner, styles.alignLeft]}>
+          {leftCornerContent}
+        </View>
+      );
+
+      mainContent = [leftCorner];
+        if (this.props.route.title) {
+          mainContent.push(
+            <Text
+              key='nav-title'
+              style={[styles.title, this.props.route.titleStyle]}
+              numberOfLines={1}>{this.props.route.title}</Text>
+        );
+      }
     }
 
     return (
       <View style={[styles.navbar, transitionStyle]}>
         {mainContent}
-        {leftCorner}
       </View>
     );
   }

@@ -12,4 +12,4 @@ var {
   AppRegistry,
 } = React;
 
-AppRegistry.registerComponent('ReactTest', () => Demo1);
+AppRegistry.registerComponent('ReactTest', () => Demo2);

@@ -56,6 +56,26 @@ var RootController = React.createClass({
   }
 });
 
+var NavbarWrapper = React.createClass({
+  _push() {
+    this.props.route.push({
+      component: DemoView,
+      navbarComponent: NavbarWrapper
+    });
+  },
+
+  render() {
+    var colorIndex = this.props.route.index % navbarColors.length;
+    var color = navbarColors[colorIndex];
+
+    return (
+      <NavbarContent
+        goFoward = {this._push}
+        goBack = {this.props.route.pop}
+        style={{backgroundColor: color}}/>);
+  }
+});
+
 var DemoView = React.createClass({
 	render() {
     var imageIndex = this.props.route.index % imageArray.length;
@@ -121,17 +141,11 @@ var DemoView = React.createClass({
   },
 
   _pushToNextCustomNavbar() {
-    var colorIndex = this.props.route.index % imageArray.length;
-    var color = navbarColors[colorIndex];
-    var nextIndex = this.props.route.index + 1;
-    var navbarContent = (
-          <NavbarContent
-            style={{backgroundColor: color}}/>);
 
     this.props.route.push({
       component: DemoView,
       title: 'title would never show',
-      navbarComponent: navbarContent
+      navbarComponent: NavbarWrapper
     });
   },
 
