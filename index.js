@@ -103,6 +103,10 @@ var Router = React.createClass({
             updateNavbarStyle:(style)=>{
               route.updateNavbarStyle &&
                 route.updateNavbarStyle(style)
+            },
+            updateNavbarProps:(props)=>{
+              route.updateNavbarProps &&
+                route.updateNavbarProps(props)
             }
           }}
           {...route.passProps}/>

@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react-native');
+var TimerMixin = require('react-timer-mixin');
 
 var {
   StyleSheet,
@@ -10,6 +11,8 @@ var {
 } = React;
 
 var NavbarBackground = React.createClass({
+  mixins: [TimerMixin],
+
   getInitialState: function() {
     return {};
   },
@@ -40,9 +43,14 @@ var NavbarBackground = React.createClass({
 
   _updateNavbarStyle: function(style) {
     this.props.route.style = style;
-    this.setState({
-      currentStyle: style,
-    });
+    this.setTimeout(
+      () => {
+        this.setState({
+          currentStyle: style,
+        });
+      },
+      0
+    );
   },
 
   render() {
@@ -61,9 +69,12 @@ var NavbarBackground = React.createClass({
 
 var screen = require('Dimensions').get('window');
 var NavBarContent = React.createClass({
+  mixins: [TimerMixin],
 
   getInitialState: function() {
-    return {};
+    return {
+      navbarProps: this.props.route.navbarPassProps
+    };
   },
 
   _initState: function(direction, fadeIn) {
@@ -85,12 +96,29 @@ var NavBarContent = React.createClass({
 
   componentDidMount: function() {
     this._initState(1, false);
+    if (!this.props.willDisappear) {
+      this.props.route.updateNavbarProps = this._updateNavbarProps;
+    }
   },
 
   componentWillReceiveProps: function(newProps) {
     if (this.props.route != newProps.route) {
       this._initState(newProps.direction, !this.props.willDisappear);
     }
+    if (!this.props.willDisappear) {
+      this.props.route.updateNavbarProps = this._updateNavbarProps;
+    }
+  },
+
+  _updateNavbarProps: function(props) {
+    this.setTimeout(
+      () => {
+        this.setState({
+          navbarProps: props
+        });
+      },
+      0
+    );
   },
 
   render() {
@@ -113,7 +141,8 @@ var NavBarContent = React.createClass({
             push: this.props.goForward,
             pop: this.props.goBack,
             popToTop: this.props.goFirst
-          }}/>
+          }}
+          {...this.state.navbarProps}/>
         );
     } else {
       var leftCorner;
