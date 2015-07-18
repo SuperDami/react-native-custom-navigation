@@ -4,6 +4,7 @@ var React = require('react-native');
 
 var NavBarContent = require('./NavBarContent').NavBarContent;
 var NavbarBackground = require('./NavBarContent').NavbarBackground;
+var StaticNavBarContent = require('./StaticNavBarContent');
 
 var {
   StyleSheet,
@@ -128,30 +129,26 @@ var NavBarContainer = React.createClass({
           backButtonComponent={this.props.backButtonComponent}/>);
     }
 
-    var fromIndex = this.state.previousRoute ? this.state.previousRoute.index : null;
-    var toIndex = this.state.currentRoute ? this.state.currentRoute.index : null;
+    var staticContent;
+    if (this.props.navbarComponent) {
+      staticContent = (
+        <StaticNavBarContent
+          previousRoute={this.state.previousRoute}
+          currentRoute={this.state.currentRoute}
+          progress={this.state.progress}
+          navbarComponent={this.props.navbarComponent}
+          navbarPassProps={this.props.navbarPassProps}
+          {...navigatorProps}/>
+        )
+    }
 
-    var navbar = this.props.navbarComponent ? (
-      <View style={styles.navbar}>
-        <this.props.navbarComponent
-          route={{
-            progress: this.state.progress,
-            index: toIndex,
-            previousIndex: fromIndex,
-            push: this._goForward,
-            pop: this._goBack,
-            popToTop: this._goFirst
-          }}/>
-      </View>
-      ) : null;
+    var navbarContents = [staticContent, previousContent, currentContent];
 
     return (
       <View style={[styles.navbarContainer, this.props.style]}>
         {previousBackground}
         {currentBackground}
-        {navbar}
-        {previousContent}
-        {currentContent}
+        {navbarContents}
       </View>
     )
   }

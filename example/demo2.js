@@ -27,18 +27,18 @@ var navbarColors = [
 
 var NavbarContent = require('./navbar');
 var screen = require('Dimensions').get('window');
-var axisWidth = 280;
+var axisWidth = screen.width - 120;
 
 var NavbarWrapper = React.createClass({
   getInitialState() {
     return {
+      backgroundColor: this.props.backgroundColor,
       progress: 0
     };
   },
 
   componentWillReceiveProps(newProps) {
-
-    if (newProps.route != this.props.route) {
+    if (newProps.route !== this.props.route) {
       var route = newProps.route;
       var progress;
       var n = Math.abs(route.previousIndex - route.index) * route.progress;
@@ -51,6 +51,12 @@ var NavbarWrapper = React.createClass({
       this.setState({
         progress : progress
       });
+    }
+
+    if (newProps.backgroundColor !== this.props.backgroundColor) {
+      this.setState({
+        backgroundColor: newProps.backgroundColor
+      })
     }
   },
 
@@ -74,7 +80,7 @@ var NavbarWrapper = React.createClass({
           style={{backgroundColor: '#5e5f67'}} />
         <View style={styles.activity}>
           <View style={styles.axisView}>
-            <View style={[styles.progress, {width: width}]}/>
+            <View style={[styles.progress, {width: width, backgroundColor: this.state.backgroundColor}]}/>
           </View>
         </View>
       </View>
@@ -87,6 +93,9 @@ var RootController = React.createClass({
     return (
       <Router
         navbarComponent={NavbarWrapper}
+        navbarPassProps={{
+          backgroundColor: '#b7d967'
+        }}
         initialRoute={{
           component: DemoView,
         }}/>);
@@ -100,31 +109,38 @@ var DemoView = React.createClass({
 
     return (
       <View style={styles.container}>
-          <Image
-            style={styles.image}
-            source={{uri: imageUri}}>
-            <TouchableHighlight
-              style={styles.button}
-              onPress={this._pushToNext}>
-              <View style={styles.buttonView}>
-                <Text style={styles.buttonText}>Push</Text>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight
-              style={styles.button}
-              onPress={this._back}>
-              <View style={styles.buttonView}>
-                <Text style={styles.buttonText}>Back</Text>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight
-              style={styles.button}
-              onPress={this._popToTop}>
-              <View style={styles.buttonView}>
-                <Text style={styles.buttonText}>Pop to top </Text>
-              </View>
-            </TouchableHighlight>
-          </Image>
+        <Image
+          style={styles.image}
+          source={{uri: imageUri}}>
+          <TouchableHighlight
+            style={styles.button}
+            onPress={this._pushToNext}>
+            <View style={styles.buttonView}>
+              <Text style={styles.buttonText}>Push</Text>
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.button}
+            onPress={this._back}>
+            <View style={styles.buttonView}>
+              <Text style={styles.buttonText}>Back</Text>
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.button}
+            onPress={this._popToTop}>
+            <View style={styles.buttonView}>
+              <Text style={styles.buttonText}>Pop to top </Text>
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.button}
+            onPress={this._changeColor}>
+            <View style={styles.buttonView}>
+              <Text style={styles.buttonText}>{'*change progress red'}</Text>
+            </View>
+          </TouchableHighlight>
+        </Image>
       </View>
     )
   },
@@ -146,6 +162,10 @@ var DemoView = React.createClass({
   _popToTop() {
     this.props.route.popToTop();
   },
+
+  _changeColor() {
+    this.props.updateNavbarProps({backgroundColor: 'rgba(255,0,0,1)'});
+  }
 });
 
 var styles = StyleSheet.create({
@@ -208,7 +228,6 @@ var styles = StyleSheet.create({
 
   progress: {
     alignSelf: 'flex-start',
-    backgroundColor: '#b7d967',
     height: 6,
     borderRadius: 3,
   }

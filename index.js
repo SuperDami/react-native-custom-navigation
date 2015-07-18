@@ -86,8 +86,12 @@ var Router = React.createClass({
       return true;
     };
 
-    var Content = route.component;
+    var updateNavbarProps = function(props) {
+      route.updateNavbarProps && route.updateNavbarProps(props);
+      route.updateStaticNavbarProps && route.updateStaticNavbarProps(props);
+    }
 
+    var Content = route.component;
     return (
       <View
         style={[styles.container]}
@@ -100,15 +104,14 @@ var Router = React.createClass({
             push:goForward,
             pop:goBackwards,
             popToTop:goToFirstRoute,
-            updateNavbarStyle:(style)=>{
-              route.updateNavbarStyle &&
-                route.updateNavbarStyle(style)
-            },
-            updateNavbarProps:(props)=>{
-              route.updateNavbarProps &&
-                route.updateNavbarProps(props)
-            }
           }}
+          updateBarBackgroundStyle={
+            (style)=>{
+              route.updateBarBackgroundStyle &&
+                route.updateBarBackgroundStyle(style)
+            }
+          }
+          updateNavbarProps={updateNavbarProps}
           {...route.passProps}/>
       </View>
     )
@@ -127,6 +130,7 @@ var Router = React.createClass({
     var navigationBar =
       <NavBarContainer
         navbarComponent={this.props.navbarComponent}
+        navbarPassProps={this.props.navbarPassProps}
         currentRoute={this.state.route}
         backButtonComponent={this.props.backButtonComponent}
         onForward={this.onForward}
@@ -140,9 +144,7 @@ var Router = React.createClass({
         initialRoute={initialRoute}
         navigationBar={navigationBar}
         renderScene={this.renderScene}
-        onDidFocus={this.onDidFocus}
-      />
-    )
+        onDidFocus={this.onDidFocus}/>)
   },
 });
 

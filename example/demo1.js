@@ -51,29 +51,48 @@ var RootController = React.createClass({
           titleStyle: {
             color: '#ddd',
             fontSize: 22
-          }
+          },
         }}/>);
   }
 });
 
 var NavbarWrapper = React.createClass({
-  _push() {
-    this.props.route.push({
-      component: DemoView,
-      navbarComponent: NavbarWrapper
-    });
+  getInitialState() {
+    return {
+      style: this.props.style,
+    };
+  },
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.style !== this.props.style) {
+      this.setState({
+        style: newProps.style
+      });
+    }
   },
 
   render() {
-    var colorIndex = this.props.route.index % navbarColors.length;
-    var color = navbarColors[colorIndex];
-
     return (
       <NavbarContent
         goFoward = {this._push}
         goBack = {this.props.route.pop}
-        style={{backgroundColor: color}}/>);
-  }
+        style={this.state.style}/>);
+  },
+
+  _push() {
+    var colorIndex = this.props.route.index % navbarColors.length;
+    var color = navbarColors[colorIndex];
+
+    this.props.route.push({
+      component: DemoView,
+      navbarComponent: NavbarWrapper,
+      navbarPassProps: {
+        style: {
+          backgroundColor: color
+        }
+      }
+    });
+  },
 });
 
 var DemoView = React.createClass({
@@ -114,7 +133,14 @@ var DemoView = React.createClass({
               style={styles.button}
               onPress={this._popToTop}>
               <View style={styles.buttonView}>
-                <Text style={styles.buttonText}>Pop to top </Text>
+                <Text style={styles.buttonText}>Pop to top</Text>
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight
+              style={styles.button}
+              onPress={this._changeColor}>
+              <View style={styles.buttonView}>
+                <Text style={styles.buttonText}>Bar color become white</Text>
               </View>
             </TouchableHighlight>
           </Image>
@@ -141,16 +167,31 @@ var DemoView = React.createClass({
   },
 
   _pushToNextCustomNavbar() {
+    var colorIndex = this.props.route.index % navbarColors.length;
+    var color = navbarColors[colorIndex];
 
     this.props.route.push({
       component: DemoView,
       title: 'title would never show',
-      navbarComponent: NavbarWrapper
+      navbarComponent: NavbarWrapper,
+      navbarPassProps: {
+        style: {
+          backgroundColor: color
+        }
+      }
     });
   },
 
   _popToTop() {
     this.props.route.popToTop();
+  },
+
+  _changeColor() {
+    this.props.updateNavbarProps({
+      style: {
+        backgroundColor: '#fff'
+      }
+    });
   },
 
   _handleScroll(e) {
@@ -159,7 +200,7 @@ var DemoView = React.createClass({
     if (alpha > 1) alpha = 1;
 
     var style = {backgroundColor: 'rgba(102, 106, 136, ' + alpha +')'};
-    this.props.route.updateNavbarStyle(style);
+    this.props.updateBarBackgroundStyle(style);
   }
 });
 

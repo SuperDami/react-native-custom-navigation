@@ -26,7 +26,7 @@ var NavbarBackground = React.createClass({
   },
 
   componentWillMount: function() {
-    this.props.route.updateNavbarStyle = this._updateNavbarStyle;
+    this.props.route.updateBarBackgroundStyle = this._updateBarBackgroundStyle;
     this._initState(false);
   },
 
@@ -34,23 +34,16 @@ var NavbarBackground = React.createClass({
     if (newProps.route !== this.props.route) {
       this._initState(!this.props.willDisappear);
       if (!this.props.willDisappear) {
-        newProps.route.updateNavbarStyle = this._updateNavbarStyle;
+        newProps.route.updateBarBackgroundStyle = this._updateBarBackgroundStyle;
       }
     }
 
     this.state.progress = newProps.progress;
   },
 
-  _updateNavbarStyle: function(style) {
-    this.props.route.style = style;
-    this.setTimeout(
-      () => {
-        this.setState({
-          currentStyle: style,
-        });
-      },
-      0
-    );
+  _updateBarBackgroundStyle: function(style) {
+    this.props.route.barBackgroundStyle = style;
+    this.setTimeout(this.forceUpdate, 0);
   },
 
   render() {
@@ -59,10 +52,8 @@ var NavbarBackground = React.createClass({
       opacity: opacity,
     };
 
-    var currentStyle = this.state.currentStyle;
-    var savedStyle = this.props.route.style;
     return (
-      <View style={[this.props.style, currentStyle, savedStyle, transitionStyle]} />
+      <View style={[this.props.style, transitionStyle, this.props.route.barBackgroundStyle]} />
     );
   }
 });
@@ -72,9 +63,7 @@ var NavBarContent = React.createClass({
   mixins: [TimerMixin],
 
   getInitialState: function() {
-    return {
-      navbarProps: this.props.route.navbarPassProps
-    };
+    return {};
   },
 
   _initState: function(direction, fadeIn) {
@@ -94,31 +83,23 @@ var NavBarContent = React.createClass({
     this.state = state;
   },
 
-  componentDidMount: function() {
+  componentWillMount: function() {
     this._initState(1, false);
-    if (!this.props.willDisappear) {
-      this.props.route.updateNavbarProps = this._updateNavbarProps;
-    }
+    this.props.route.updateNavbarProps = this._updateNavbarProps;
   },
 
   componentWillReceiveProps: function(newProps) {
-    if (this.props.route != newProps.route) {
+    if (this.props.route !== newProps.route) {
       this._initState(newProps.direction, !this.props.willDisappear);
-    }
-    if (!this.props.willDisappear) {
-      this.props.route.updateNavbarProps = this._updateNavbarProps;
+      if (!newProps.willDisappear) {
+        newProps.route.updateNavbarProps = this._updateNavbarProps;
+      }
     }
   },
 
   _updateNavbarProps: function(props) {
-    this.setTimeout(
-      () => {
-        this.setState({
-          navbarProps: props
-        });
-      },
-      0
-    );
+    this.props.route.navbarProps = props;
+    this.setTimeout(this.forceUpdate, 0);
   },
 
   render() {
@@ -133,6 +114,7 @@ var NavBarContent = React.createClass({
 
     var mainContent;
     if (this.props.route.navbarComponent) {
+      var navbarProps = this.props.route.navbarProps ? this.props.route.navbarProps : this.props.route.navbarPassProps
       var NavbarComponent = this.props.route.navbarComponent;
       mainContent = (
         <NavbarComponent
@@ -142,7 +124,7 @@ var NavBarContent = React.createClass({
             pop: this.props.goBack,
             popToTop: this.props.goFirst
           }}
-          {...this.state.navbarProps}/>
+          {...navbarProps}/>
         );
     } else {
       var leftCorner;
