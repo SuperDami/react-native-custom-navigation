@@ -51,11 +51,11 @@ AppRegistry.registerComponent('ReactTest', () => Demo1);
 Update
 -------
 0.2.0:    
-- `You can pass initial props to your navbar component by  
-setting "navbarPassProps" when pushing a route object.  
-- You can update current navbar props in current view module by calling "this.props.updateNavbarProps".    
-- Access the passing props in your navbar module by this.props.xxx,
-- Handle the passing props in "componentWillMound" or "componentWillReceiveProps" to render navbar UI.
+- You can pass initial props to your navbar component by  
+setting **`navbarPassProps`** when pushing a route object.  
+- You can update current navbar props in current view module by calling **`this.props.updateNavbarProps`**.    
+- Access the passing props in your navbar module by **`this.props.xxx`**,
+- Handle the passing props in **`componentWillMound`** or **`componentWillReceiveProps`** to render navbar UI.
 - The usage of these features can be found in the example that had been updated.
 
 
@@ -184,7 +184,7 @@ The **`navbarComponent` and `component`** access route parameter or function by 
 
 ~~The **`this.props.route.updateNavbarStyle()`** callback prop takes style object which update the style of navbar background~~
 
-Function **`this.props.route.updateNavbarStyle`** had been removed, Using **`this.props.updateBarBackgroundStyle()`** replace with it. 
+**`this.props.route.updateNavbarStyle`** this function had been abandoned, replace with **`this.props.updateBarBackgroundStyle()`** . 
 
 
 Todos
