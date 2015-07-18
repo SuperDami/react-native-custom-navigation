@@ -48,8 +48,18 @@ var {
 AppRegistry.registerComponent('ReactTest', () => Demo1);
 ```
 
+Update
+-------
+0.2.0:    
+- `You can pass initial props to your navbar component by  
+setting "navbarPassProps" when pushing a route object.  
+- You can update current navbar props in current view module by calling "this.props.updateNavbarProps".    
+- Access the passing props in your navbar module by this.props.xxx,
+- Handle the passing props in "componentWillMound" or "componentWillReceiveProps" to render navbar UI.
+- The usage of these features can be found in the example that had been updated.
 
-Usage
+
+Basic Usage
 -------
 
 ```javascript
@@ -153,31 +163,35 @@ The **`<Router />`** object used to initialize the navigation can take the follo
 - `initialRoute` (required)
 - `backButtonComponent`
 - `navbarComponent`: Set the component as the singleton navbar for all views. 
+- `navbarPassProps`: Send initial props to your singleton navbar, access it by `this.props.xxx`
 
 The **`this.props.route.push()`** callback prop takes one parameter (a JavaScript object) which can have the following keys:
 - `title`
 - `titleStyle`
-- `component` (required)
+- `component` (required) The next view component
 - `navbarComponent`: Set the component as the navbar in this route  
-- `passProps`: Send object data to your route. access the data by `this.props.xxx`
+- `passProps`: Send object data to your view component. access the data by `this.props.xxx`
+- `navbarPassProps`: Send initial data to your navbar, access it by `this.props.xxx`
 
 The **`navbarComponent` and `component`** access route parameter or function by ***`this.props.route`*** which have the following keys:
 - `index`
 - `previousIndex`(for singleton navbar only)
 - `progress`(for singleton navbar only): current transition animation progress (0 - 1)
-- `updateNavbarStyle`(view component only)
+- ~~`updateNavbarStyle`(view component only)~~
 - `push`
 - `pop`
 - `popToTop`
 
-The **`this.props.route.updateNavbarStyle()`** callback prop takes style object which update the style of navbar background
+~~The **`this.props.route.updateNavbarStyle()`** callback prop takes style object which update the style of navbar background~~
+
+Function **`this.props.route.updateNavbarStyle`** had been removed, Using **`this.props.updateBarBackgroundStyle()`** replace with it. 
 
 
 Todos
 -------
 
 - Less and clear code
-
+- Make transition animation looks naturally when using singleton navbar and stack navbar at same time.
 
 Questions?
 ---------

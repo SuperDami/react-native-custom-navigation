@@ -58,9 +58,13 @@ var RootController = React.createClass({
 
 var NavbarWrapper = React.createClass({
   getInitialState() {
-    return {
-      style: this.props.style,
-    };
+    return {};
+  },
+
+  componentWillMount() {
+    this.setState({
+      style: this.props.style
+    });
   },
 
   componentWillReceiveProps(newProps) {
@@ -140,7 +144,7 @@ var DemoView = React.createClass({
               style={styles.button}
               onPress={this._changeColor}>
               <View style={styles.buttonView}>
-                <Text style={styles.buttonText}>Bar color become white</Text>
+                <Text style={styles.buttonText}>*Bar color become white</Text>
               </View>
             </TouchableHighlight>
           </Image>
