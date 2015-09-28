@@ -9,12 +9,6 @@ var {
 } = React;
 
 var Router = require('react-native-custom-navigation');
-var imageArray = [
-  'https://divnil.com/wallpaper/iphone5/img/app/c/l/clear-your-desktop-wallpaper-for-640x1136-iphone-5-311-46_33a8356f2205d7c0be8727720a21a207_raw.jpg',
-  'http://live-wallpaper.net/iphone5s/img/app/i/p/iphone5_ios7_01869_40f81d87eba8242eb9d1d777aa0f620a_raw.jpg',
-  'http://3.bp.blogspot.com/-6sBo91tPiXU/UHx6TZMG4CI/AAAAAAAAIyw/RCTivAH6dVk/s1600/iphone-5-wallpapers-01.png',
-  'http://live-wallpaper.net/iphone5s/img/app/c/0/c0dc6d89f28ea771d0af7167236a5117_raw.jpg'
-];
 
 var navbarColors = [
   '#acc7bf',
@@ -104,8 +98,7 @@ var RootController = React.createClass({
 
 var DemoView = React.createClass({
   render() {
-    var imageIndex = this.props.route.index % imageArray.length;
-    var imageUri = imageArray[imageIndex];
+    var imageUri = 'https://divnil.com/wallpaper/iphone5/img/app/c/l/clear-your-desktop-wallpaper-for-640x1136-iphone-5-311-46_33a8356f2205d7c0be8727720a21a207_raw.jpg';
 
     return (
       <View style={styles.container}>
