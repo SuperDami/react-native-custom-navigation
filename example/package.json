@@ -1,6 +1,6 @@
 {
   "name": "sample-react-native-custom-navigation",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "scripts": {
     "start": "node_modules/react-native/packager/packager.sh"

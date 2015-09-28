@@ -4,10 +4,10 @@ The goal is making a easy navigation router for react-native, you could plug-in 
 
 Inspired by [react-native-router](https://github.com/t4t5/react-native-router)
 
-Case 1:  
-Different view stack using different navgation bar  
+Case 1:
+Different view stack using different navgation bar
 
-![Example](https://www.dropbox.com/s/3jqguw37buhagu4/demo.gif?dl=1)  
+![Example](https://www.dropbox.com/s/3jqguw37buhagu4/demo.gif?dl=1)
 
 
 Case 2:
@@ -50,10 +50,14 @@ AppRegistry.registerComponent('ReactTest', () => Demo1);
 
 Update
 -------
-0.2.0:    
-- You can pass initial props to your navbar component by  
-setting **`navbarPassProps`** when pushing a route object.  
-- You can update current navbar props in current view module by calling **`this.props.updateNavbarProps`**.    
+0.2.1:
+- Not specifying react-native as dependency in package.json
+- Demo using react-native 0.11
+
+0.2.0:
+- You can pass initial props to your navbar component by
+setting **`navbarPassProps`** when pushing a route object.
+- You can update current navbar props in current view module by calling **`this.props.updateNavbarProps`**.
 - Access the passing props in your navbar module by **`this.props.xxx`**,
 - Handle the passing props in **`componentWillMound`** or **`componentWillReceiveProps`** to render navbar UI.
 - The usage of these features can be found in the example that had been updated.
@@ -66,7 +70,7 @@ Basic Usage
 var Router = require('react-native-custom-navigation');
 ```
 
-Your route object should contain component object for the page to render.  
+Your route object should contain component object for the page to render.
 I would like setting a back-button component for each view stack, also you can pass this and manage the back-button by your navigation-bar.
 
 ```javascript
@@ -105,7 +109,7 @@ var RootController = React.createClass({
 AppRegistry.registerComponent('ReactTest', () => RootController);
 ```
 
-Here we go.  
+Here we go.
 Now we got a scrollView here, we can have fade-in navbar-background when we scrolling down.
 
 ```javascript
@@ -148,13 +152,13 @@ var FirstView = React.createClass({
 });
 ```
 
-You can then navigate further to a new component by calling  
+You can then navigate further to a new component by calling
 ```javascript
 this.props.route.push()
 ```
 
-You can set "navbarComponent" as navigation-bar in next route object.  
-If you want still have the fade-in effect, make sure the background color of your "navbarComponent" is transparent.  
+You can set "navbarComponent" as navigation-bar in next route object.
+If you want still have the fade-in effect, make sure the background color of your "navbarComponent" is transparent.
 
 
 Configurations
@@ -162,14 +166,14 @@ Configurations
 The **`<Router />`** object used to initialize the navigation can take the following props:
 - `initialRoute` (required)
 - `backButtonComponent`
-- `navbarComponent`: Set the component as the singleton navbar for all views. 
+- `navbarComponent`: Set the component as the singleton navbar for all views.
 - `navbarPassProps`: Send initial props to your singleton navbar, access it by `this.props.xxx`
 
 The **`this.props.route.push()`** callback prop takes one parameter (a JavaScript object) which can have the following keys:
 - `title`
 - `titleStyle`
 - `component` (required) The next view component
-- `navbarComponent`: Set the component as the navbar in this route  
+- `navbarComponent`: Set the component as the navbar in this route
 - `passProps`: Send object data to your view component. access the data by `this.props.xxx`
 - `navbarPassProps`: Send initial data to your navbar, access it by `this.props.xxx`
 
@@ -184,7 +188,7 @@ The **`navbarComponent` and `component`** access route parameter or function by 
 
 ~~The **`this.props.route.updateNavbarStyle()`** callback prop takes style object which update the style of navbar background~~
 
-**`this.props.route.updateNavbarStyle`** this function had been abandoned, replace with **`this.props.updateBarBackgroundStyle()`** . 
+**`this.props.route.updateNavbarStyle`** this function had been abandoned, replace with **`this.props.updateBarBackgroundStyle()`** .
 
 
 Todos
