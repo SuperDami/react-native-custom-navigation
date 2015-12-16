@@ -7,7 +7,8 @@ var {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight
+  TouchableHighlight,
+  Dimensions,
 } = React;
 
 var NavbarBackground = React.createClass({
@@ -58,7 +59,7 @@ var NavbarBackground = React.createClass({
   }
 });
 
-var screen = require('Dimensions').get('window');
+var screen = Dimensions.get('window');
 var NavBarContent = React.createClass({
   mixins: [TimerMixin],
 
