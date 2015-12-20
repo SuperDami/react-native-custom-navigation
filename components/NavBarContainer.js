@@ -142,7 +142,13 @@ var NavBarContainer = React.createClass({
         )
     }
 
-    var navbarContents = [staticContent, previousContent, currentContent];
+    // Using createFragment to prevent 'Each child in an array should have a unique "key" prop.'
+    // warning message
+    var navbarContents = React.addons.createFragment({
+      "staticContent": staticContent,
+      "previousCountent" : previousContent,
+      "currentContent":currentContent
+    });
 
     return (
       <View style={[styles.navbarContainer, this.props.style]}>
