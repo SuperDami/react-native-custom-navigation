@@ -110,7 +110,7 @@ var Router = React.createClass({
             push:goForward,
             pop:goBackwards,
             popToTop:goToFirstRoute,
-            replace:goToRouteAndReset,
+            reset:goToRouteAndReset,
           }}
           updateBarBackgroundStyle={
             (style)=>{
