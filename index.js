@@ -61,6 +61,12 @@ var Router = React.createClass({
       navigator.popToTop();
     };
 
+    var goToRouteAndReset = function(route) {
+      var routeState = Object.assign({}, this.state.route, { index: 0 });
+      this.setState({ route: routeState });
+      navigator.resetTo(route);
+    }.bind(this);
+
     var didStartDrag = function(evt) {
       var x = evt.nativeEvent.pageX;
       if (x < 28) {
@@ -89,7 +95,7 @@ var Router = React.createClass({
     var updateNavbarProps = function(props) {
       route.updateNavbarProps && route.updateNavbarProps(props);
       route.updateStaticNavbarProps && route.updateStaticNavbarProps(props);
-    }
+    };
 
     var Content = route.component;
     return (
@@ -104,6 +110,7 @@ var Router = React.createClass({
             push:goForward,
             pop:goBackwards,
             popToTop:goToFirstRoute,
+            reset:goToRouteAndReset,
           }}
           updateBarBackgroundStyle={
             (style)=>{

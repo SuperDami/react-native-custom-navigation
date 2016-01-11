@@ -18,6 +18,8 @@ var NavBarContainer = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps) {
+    let previousRoute;
+
     if (!this.props.currentRoute || (this.props.currentRoute.index === null)) {
       newProps.currentRoute.index = 0;
     }
@@ -26,8 +28,12 @@ var NavBarContainer = React.createClass({
       return;
     }
 
+    if (!this.props.currentRoute || newProps.currentRoute.index !== this.props.currentRoute.index) {
+      previousRoute = this.props.currentRoute;
+    }
+
     this.setState({
-      previousRoute: this.props.currentRoute,
+      previousRoute: previousRoute,
       currentRoute: newProps.currentRoute
     });
   },
