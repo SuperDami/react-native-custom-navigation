@@ -121,10 +121,12 @@ var Router = React.createClass({
   render: function() {
 
     // Status bar color
-    if (this.props.statusBarColor === "black") {
-      StatusBarIOS.setStyle(0);
-    } else {
-      StatusBarIOS.setStyle(1);
+    if (StatusBarIOS) {
+      if (this.props.statusBarColor === "black") {
+        StatusBarIOS.setStyle(0);
+      } else {
+        StatusBarIOS.setStyle(1);
+      }
     }
 
     var navigationBar =
